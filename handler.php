@@ -6,7 +6,9 @@ use Dotenv\Dotenv;
 use Maknz\Slack\Client;
 
 // load environment variables
-(new Dotenv(__DIR__))->load();
+$dotenv = new Dotenv(__DIR__);
+$dotenv->load();
+$dotenv->required('SLACK_WEBHOOK_URL')->notEmpty();
 
 $colours = ['good', 'warning', 'danger'];
 $titles = ['Yay!', 'Uh oh…', ':rotating_light: SOMETHING BROKE :rotating_light:'];
