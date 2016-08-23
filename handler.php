@@ -44,7 +44,7 @@ $client->attach([
         ],
         [
             'title' => 'Client',
-            'value' => $sensuOutput['client'],
+            'value' => $sensuOutput['client']['name'],
             'short' => true,
         ],
         [
