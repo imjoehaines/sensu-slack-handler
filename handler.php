@@ -11,6 +11,7 @@ use Maknz\Slack\Client;
 $colours = ['good', 'warning', 'danger'];
 $titles = ['Yay!', 'Uh oh…', ':rotating_light: SOMETHING BROKE :rotating_light:'];
 $messages = ['`CheckResult::ok`', '`CheckResult::warning`', '`CheckResult::critical`'];
+$icons = [':heart:', ':warning:', ':rotating_light:'];
 
 $rawSensuOutput = fgets(STDIN);
 $sensuOutput = json_decode($rawSensuOutput, true);
@@ -29,7 +30,15 @@ $message = in_array($exitCode, array_keys($messages))
     ? $messages[$exitCode]
     : 'Unknown exit code from the sensor: "' . json_encode($exitCode) . '"';
 
-$client = new Client(getenv('SLACK_WEBHOOK_URL'), ['username' => 'Sensu', 'icon' => ':heart:']);
+$icon = in_array($exitCode, array_keys($icons))
+    ? $icons[$exitCode]
+    : ':interrobang:';
+
+$channel = isset($sensuOutput['check']['channel']) ? $sensuOutput['check']['channel'] : '#sensu_testing';
+
+$clientOptions = ['username' => 'Sensu', 'icon' => $icon, 'channel' => $channel];
+
+$client = new Client(getenv('SLACK_WEBHOOK_URL'), $clientOptions);
 $client->attach([
     'fallback' => $sensuOutput['check']['name'],
     'title' => $title,

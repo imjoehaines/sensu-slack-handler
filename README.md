@@ -18,4 +18,14 @@ cat example.json | php handler.php
 
 *NB* currently only handles a single line of input
 
+The channel posted to can be overwritten by setting `check.channel` in a check's JSON:
+
+```json
+{
+  "check": {
+    "channel": "#some_channel"
+  }
+}
+```
+
 ![Example Slack output](screenshot.png)
