@@ -9,6 +9,7 @@ use Maknz\Slack\Client;
 $dotenv = new Dotenv(__DIR__);
 $dotenv->load();
 $dotenv->required('SLACK_WEBHOOK_URL')->notEmpty();
+$dotenv->required('SLACK_CHANNEL');
 
 $colours = ['good', 'warning', 'danger'];
 $titles = ['Yay!', 'Uh oh…', ':rotating_light: SOMETHING BROKE :rotating_light:'];
@@ -36,7 +37,7 @@ $icon = in_array($exitCode, array_keys($icons))
     ? $icons[$exitCode]
     : ':interrobang:';
 
-$channel = isset($sensuOutput['check']['channel']) ? $sensuOutput['check']['channel'] : '#sensu_testing';
+$channel = getenv('SLACK_CHANNEL') ?: '#sensu_testing';
 
 $clientOptions = ['username' => 'Sensu', 'icon' => $icon, 'channel' => $channel];
 
