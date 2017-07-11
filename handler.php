@@ -13,7 +13,7 @@ $dotenv->required('SLACK_WEBHOOK_URL')->notEmpty();
 $colours = ['good', 'warning', 'danger'];
 $titles = ['Yay!', 'Uh oh…', ':rotating_light: SOMETHING BROKE :rotating_light:'];
 $messages = ['`CheckResult::ok`', '`CheckResult::warning`', '`CheckResult::critical`'];
-$icons = [':heart:', ':warning:', ':rotating_light:'];
+$icons = [':green_heart:', ':warning:', ':rotating_light:'];
 
 $rawSensuOutput = fgets(STDIN);
 $sensuOutput = json_decode($rawSensuOutput, true);
